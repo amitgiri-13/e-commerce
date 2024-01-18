@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}{%endblock%}|e-commerce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+     <!-- Navigation Bar -->
+  <nav class="bg-blue-500 p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-lg font-bold">E-Commerce</a>
+        <input type="text" placeholder="Search" class="px-2 py-1 border border-white rounded">
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="hover:underline">All Products</a>
+        <a href="#" class="hover:underline">New Arrivals</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        {%if request.user.is_authenticated%}
+        <a href="#" class="hover:underline">Add To Cart</a>
+        <a href="#" class="hover:underline">Logout</a>
+        {%else%}
+        <a href="#" class="hover:underline">Login</a>
+        <a href="/signup/" class="hover:underline">Signup</a>
+        {%endif%}
+        
+      </div>
+    </div>
+  </nav>
+
+     <!-- Content Section -->
+  <div class="container mx-auto mt-8">
+        {%block content%}
+        {%endblock%}
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="bg-gray-800 text-white p-4 mt-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 E-commerce Website. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
