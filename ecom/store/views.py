@@ -30,3 +30,4 @@ def signup(request):
         form = SignUpForm()
 
     return render(request, 'store/signup.html', {'form': form})
+
