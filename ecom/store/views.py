@@ -6,12 +6,19 @@ from django.contrib.auth import login
 from .models import *
 from .forms import SignUpForm
 
-class IndexView(generic.TemplateView):
+class IndexView(generic.ListView):
     template_name = "store/home.html"
+    model = Product
+    context_object_name = "product_list"
+
+    def get_queryset(self):
+        return super().get_queryset()
+    
 
 class ProductDetailView(generic.DetailView):
     model = Product
-    template_name = "sotre/detail.html"
+    template_name = "store/detail.html"
+    context_object_name = "product"
     
 
 def signup(request):
