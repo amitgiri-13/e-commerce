@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = (
     path("home/",views.IndexView.as_view(),name="home"),
+    path("newarrivals/",views.NewArrivalView.as_view(),name="new_arrivals"),
     path("detail/<int:pk>/",views.ProductDetailView.as_view(),name="product_detail"),
     path("signup/",views.signup,name="signup"),
     path("login/",auth_views.LoginView.as_view(template_name="store/login.html"),name="login"),

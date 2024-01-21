@@ -18,6 +18,11 @@ class Product(models.Model):
     description = models.TextField(max_length=255)
     price = models.DecimalField(decimal_places=2,max_digits=8,blank=False)
     image = models.ImageField(upload_to="store/static/store/images",blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    in_stock = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.product
