@@ -26,3 +26,22 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product
+
+class Cart(models.Model):
+    customer = models.OneToOneField(User,on_delete=models.CASCADE)
+  
+    def __str__(self):
+        return self.customer.username
+
+class CartItems(models.Model):
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+    products = models.ForeignKey(Product,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.products.product
+
+    class Meta:
+        verbose_name_plural = "Cart Items"
+
+
+    
