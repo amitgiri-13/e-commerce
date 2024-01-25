@@ -58,20 +58,30 @@ def signup(request):
 
 @login_required
 def add_to_cart(request, product_id):
-    if request.method == "GET":
-        
+    if request.method == "POST":
         product = get_object_or_404(Product, id=product_id)
-
-        # Get or create the user's cart
-        cart= Cart.objects.get_or_create(customer=request.user)
-
-        # Check if the product is already in the cart
-        cart_item, item_created = CartItems.objects.get_or_create(cart=cart, product=product)
-
-        # If the item is already in the cart, increase the quantity
+        cart, created = Cart.objects.get_or_create(customer=request.user)
+        cart_item, item_created = CartItems.objects.get_or_create(cart=cart, products=product)
         if not item_created:
-            cart_item.quantity += 1
             cart_item.save()
 
-        return redirect('my_carts')  # Redirect to the cart view or wherever you want
+    return redirect('my_carts')
 
+@login_required
+def remove_from_cart(request,item_id):
+    if request.method == "POST":
+        cart_item = get_object_or_404(CartItems,products_id=item_id)
+        cart_item.delete()
+
+    return redirect("my_carts")
+
+def search_items(request):
+    query = request.POST.get('search_by')
+    if query:
+        objects = Product.objects.filter(
+                models.Q(product__icontains=query) |
+                models.Q(description__icontains=query)
+            )
+        return render(request,'store/search_results.html',{'product_list':objects})
+    
+    return redirect("home")

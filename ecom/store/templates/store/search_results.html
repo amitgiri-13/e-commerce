@@ -1,15 +1,13 @@
-{%extends "store/base.html"%}
-{%load static%}
+{% extends 'store/base.html' %}
+{% load static %}
 
-{%block title%}Home{%endblock%}
+{% block title %}Search Results{% endblock %}
 
-{%block content%} 
+{% block content %}
 <div class='container mx-auto px-4 py-8'>
-    {%for category in category_list%}
-        {%if category.product_set.all%}
-        <h2 class="text-2xl font-semibold mb-4 mt-8">{{category.category}}</h2>
+        {%if product_list%}
         <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {% for product in category.product_set.all %}
+            {% for product in product_list %}
                 <div class='bg-white p-4 rounded-lg shadow-md h-full'>
                     <a href='{% url "product_detail" pk=product.pk %}'>
                         <img class='object-cover h-48 w-full mb-4' src='{% static product.image.url %}' alt='Product Image'>
@@ -17,17 +15,17 @@
                         <p class='text-green-600 font-semibold mb-4'>Rs.{{ product.price }}</p>
                     </a>
                     <a href='{% url "home" %}' class='bg-blue-500 text-white px-7 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue text-center mr-4'>
-                        Buy Now
+                        Buy now
                     </a>
-                    <form method="post" action={%url 'add_to_cart' product_id=product.id%} class='inline bg-blue-500 text-white px-7 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue text-center mr-4'>
+                    <form method="post" action="{% url 'add_to_cart' product_id=product.id %}" class="inline bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue text-center mr-4">
                         {% csrf_token %}
-                    <button type="submit">
-                        Add To Cart
-                    </form>
+                        <button type="submit" class="hover:underline">Add to Cart</button>
+                      </form>
                 </div>
             {% endfor %}
         </div>
-        {%endif%}
-    {%endfor%}
-</div> 
-{%endblock%}
+        {%else%}
+         <p>No related items found</p>
+        {%endif%} 
+</div>
+{% endblock %}
