@@ -7,6 +7,15 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import SignUpForm
 
+class ProfileView(generic.DetailView):
+    model = Profile
+    template_name = "store/profile.html"
+    context_object_name = "profile"
+
+    def get_object(self):
+        return self.request.user.profile
+    
+
 class IndexView(generic.ListView):
     model = Category
     template_name = "store/home.html"
@@ -37,6 +46,14 @@ class MyCartView(generic.ListView):
 
     def get_queryset(self):
         return CartItems.objects.filter(cart__customer=self.request.user)
+    
+class OrderView(generic.ListView):
+    model = Order
+    template_name = "store/order.html"
+    context_object_name = "order_list"
+
+    def get_queryset(self):
+        return Order.objects.filter(buyer=self.request.user)
     
 
 def signup(request):
@@ -85,3 +102,4 @@ def search_items(request):
         return render(request,'store/search_results.html',{'product_list':objects})
     
     return redirect("home")
+

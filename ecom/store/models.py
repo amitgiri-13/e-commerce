@@ -1,7 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
-# Create your models here.
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="store/static/store/user_images",blank=True,null=True)
+    address = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user.username
+
 class Category(models.Model):
     category = models.CharField(max_length=50,unique=True,blank=False,null=False)
 
@@ -45,4 +53,37 @@ class CartItems(models.Model):
         verbose_name_plural = "Cart Items"
 
 
-    
+class Order(models.Model):
+    class OrderStatus(models.TextChoices):
+        CREATED = "CR","Created"
+        DISPATCHED = "DP","Dispatched"
+        DELIVERED = "DV","Delivered"
+        CANCELED = "CN","Canceled"
+        RETURNED = "RTV","Returned"
+
+
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    buyer = models.ForeignKey(User,on_delete=models.CASCADE,related_name="customer")
+    order_status = models.CharField(max_length=3,choices=OrderStatus.choices,default=OrderStatus.CREATED)
+    payment_status = models.BooleanField(default=False)
+    order_date = models.DateField(auto_now_add=True)
+    order_address = models.CharField(max_length=255,null=False,blank=False)
+    contact_number = models.BigIntegerField(
+        validators=[RegexValidator(
+            regex=r'^(\+\d{1,3}[- ]?)?\d{10}$',
+            message='Enter a valid phone number.',
+            code='invalid_phone_number'
+        )]
+    )
+
+    @property 
+    def seller(self):
+        return self.product.owner
+
+    @property 
+    def total_price(self):
+        return self.product.price*self.quantity
+
+    def __str__(self):
+        return self.product.product

@@ -32,8 +32,9 @@
         {%if request.user.is_authenticated%}
         <form method="POST" action={%url 'logout'%} class="inline">
             {% csrf_token %}
-            <button type="submit" class="hover:underline">logout</button> 
+            <button type="submit" class="hover:underline">Logout</button> 
         </form>
+          <a href="/profile/" class="hover:underline">{{request.user.username}}</a>
         {%else%}
         <a href="/login/" class="hover:underline">Login</a>
         <a href="/signup/" class="hover:underline">Signup</a>

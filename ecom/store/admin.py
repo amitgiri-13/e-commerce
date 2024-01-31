@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register(Category)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -16,3 +15,6 @@ class CartItemsInline(admin.TabularInline):
 class CartAdmin(admin.ModelAdmin):
     inlines = [CartItemsInline]
     
+admin.site.register(Category)
+admin.site.register(Profile)
+admin.site.register(Order)

@@ -1,0 +1,46 @@
+{% extends "store/base.html" %}
+
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Orders</h1>
+    {% if order_list %}
+    <table class="table-auto w-full">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">Order ID</th>
+                <th class="px-4 py-2">Product</th>
+                <th class="px-4 py-2">Quantity</th>
+                <th class="px-4 py-2">Total Price</th>
+                <th class="px-4 py-2">Seller</th>
+                <th class="px-4 py-2">Order Status</th>
+                <th class="px-4 py-2">Payment Status</th>
+                <th class="px-4 py-2">Order Date</th>
+                <th class="px-4 py-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+            <tr>
+                <td class="border px-4 py-2">{{ order.id }}</td>
+                <td class="border px-4 py-2">{{ order.product.product }}</td>
+                <td class="border px-4 py-2">{{ order.quantity }}</td>
+                <td class="border px-4 py-2">Rs {{ order.total_price }}</td>
+                <td class="border px-4 py-2">{{ order.seller.username }}</td>
+                <td class="border px-4 py-2">{{ order.get_order_status_display }}</td>
+                <td class="border px-4 py-2">{{ order.payment_status }}</td>
+                <td class="border px-4 py-2">{{ order.order_date }}</td>
+                <td class="border px-4 py-2">
+                    <a href="#" class="text-red-500 hover:text-blue-700 mr-2">Cancel</a>
+                    <a href="#" class="text-green-500 hover:text-green-700">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No orders created yet!</p>
+    {% endif %}
+</div>
+{% endblock %}
