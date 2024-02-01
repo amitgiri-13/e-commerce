@@ -1,0 +1,26 @@
+{%extends "store/base.html"%}
+{%block title%}Order Detail{%endblock%}
+
+{%block content%}
+<div class="container mx-auto p-8">
+   
+    <h1 class="text-3xl font-bold mb-4 text-blue-700">Order ID: {{ order.id }}</h1>
+    
+   
+    <div class="bg-blue-100 border border-blue-300 shadow-md rounded-md p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4 text-blue-700">Shipping Label</h2>
+        <p class="text-gray-800">Receiver Name: {{ order.receiver_name }}</p>
+        <p class="text-gray-800">Contact Number: {{ order.contact_number }}</p>
+        <p class="text-gray-800">Shipping Address: {{ order.order_address }}</p>
+    </div>
+    
+    <div class="bg-green-100 border border-green-300 shadow-md rounded-md p-6">
+        <h2 class="text-xl font-semibold mb-4 text-green-700">Order Details</h2>
+        <p class="text-gray-800">Product: {{ order.product }}</p>
+        <p class="text-gray-800">Quantity: {{ order.quantity }}</p>
+        <p class="text-gray-800">Total Price: Rs {{ order.total_price }}</p>
+        <p class="text-gray-800">Order Status: <span class="font-semibold">{{ order.get_order_status_display }}</span></p>
+        <p class="text-gray-800">Payment Status: {% if order.payment_status %} <span class="text-green-700 font-semibold">Paid</span> {% else %} <span class="text-red-700 font-semibold">Unpaid</span> {% endif %}</p>
+        <p class="text-gray-800">Order Date: {{ order.order_date }}</p>
+    </div>
+{%endblock%}

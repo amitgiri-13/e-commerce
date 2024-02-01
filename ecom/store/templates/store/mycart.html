@@ -16,7 +16,7 @@
                         <h2 class='text-xl font-semibold mb-2'>{{ item.products.product }}</h2>
                         <p class='text-green-600 font-semibold mb-4'>Rs.{{ item.products.price }}</p>
                     </a>
-                    <a href='{% url "product_detail" pk=item.products.pk %}' class='bg-blue-500 text-white px-7 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue text-center mr-8'>
+                    <a href='{% url "buynow" product_id=item.products.id%}' class='bg-blue-500 text-white px-7 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue text-center mr-8'>
                         Buy Now
                     </a>
                     <form method="post" action={%url 'remove_from_cart' item_id=item.products.id%} class='inline bg-blue-500 text-white px-7 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue text-center mr-4'>

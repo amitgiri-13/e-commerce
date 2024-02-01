@@ -59,7 +59,23 @@ class OrderView(generic.ListView):
             models.Q(order_status="DP")
             )
             )
+class OrderDetailView(generic.DetailView):
+    model = Order
+    template_name = "store/orderdetail.html"
+    context_object_name = "order"
 
+def search_items(request):
+    query = request.POST.get('search_by')
+    if query:
+        objects = Product.objects.filter(
+                models.Q(product__icontains=query) |
+                models.Q(description__icontains=query)
+            )
+        return render(request,'store/search_results.html',{'product_list':objects})
+    
+    return redirect("home")
+
+@login_required
 def buynow(request,product_id):
     if request.method == "POST":
         product = Product.objects.get(pk=product_id)
@@ -83,24 +99,7 @@ def buynow(request,product_id):
         form = OrderForm()
         
     return render(request,'store/buynow.html',{'form':form})
-        
 
-def signup(request):
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
-           
-            user = form.save()  
-            login(request,user)
-
-            return redirect('home')
-    else:
-        form = SignUpForm()
-
-    return render(request, 'store/signup.html', {'form': form})
 
 @login_required
 def add_to_cart(request, product_id):
@@ -121,14 +120,31 @@ def remove_from_cart(request,item_id):
 
     return redirect("my_carts")
 
-def search_items(request):
-    query = request.POST.get('search_by')
-    if query:
-        objects = Product.objects.filter(
-                models.Q(product__icontains=query) |
-                models.Q(description__icontains=query)
-            )
-        return render(request,'store/search_results.html',{'product_list':objects})
-    
-    return redirect("home")
+@login_required
+def cancel_order(request,order_id):
+    if request.method == "POST":
+        order = Order.objects.get(pk=order_id)
+        order.order_status = "CN"
+        order.save()
+        
+        return redirect("orders")
+
+    return render(request,"store/order.html",{"error_message":"something went wrong"})
+
+def signup(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password1 = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']
+           
+            user = form.save()  
+            login(request,user)
+
+            return redirect('home')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'store/signup.html', {'form': form})
 
