@@ -61,7 +61,6 @@ class Order(models.Model):
         CANCELED = "CN","Canceled"
         RETURNED = "RTV","Returned"
 
-
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     buyer = models.ForeignKey(User,on_delete=models.CASCADE,related_name="customer")
@@ -69,6 +68,7 @@ class Order(models.Model):
     payment_status = models.BooleanField(default=False)
     order_date = models.DateField(auto_now_add=True)
     order_address = models.CharField(max_length=255,null=False,blank=False)
+    receiver_name = models.CharField(max_length=100)
     contact_number = models.BigIntegerField(
         validators=[RegexValidator(
             regex=r'^(\+\d{1,3}[- ]?)?\d{10}$',

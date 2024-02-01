@@ -5,7 +5,7 @@ from django.db.models import Prefetch
 
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import SignUpForm
+from .forms import SignUpForm, OrderForm
 
 class ProfileView(generic.DetailView):
     model = Profile
@@ -53,8 +53,37 @@ class OrderView(generic.ListView):
     context_object_name = "order_list"
 
     def get_queryset(self):
-        return Order.objects.filter(buyer=self.request.user)
-    
+        return Order.objects.filter(
+            models.Q(buyer=self.request.user) &
+            (models.Q(order_status="CR") |
+            models.Q(order_status="DP")
+            )
+            )
+
+def buynow(request,product_id):
+    if request.method == "POST":
+        product = Product.objects.get(pk=product_id)
+        buyer = request.user
+
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            receiver_name = form.cleaned_data['receiver_name']
+            quantity = form.cleaned_data['quantity']
+            order_address = form.cleaned_data['order_address']
+            contact_number  = form.cleaned_data['contact_number']
+            
+            
+            order = form.save(commit=False)
+            order.product = product
+            order.buyer = buyer
+            order.save()
+
+            return redirect('orders') 
+    else:
+        form = OrderForm()
+        
+    return render(request,'store/buynow.html',{'form':form})
+        
 
 def signup(request):
     if request.method == "POST":

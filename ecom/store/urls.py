@@ -16,4 +16,5 @@ urlpatterns = (
     path("removefromcart/<int:item_id>/",views.remove_from_cart,name="remove_from_cart"),
     path("search/",views.search_items,name="search"),
     path("orders/",views.OrderView.as_view(),name="orders"),
+    path("buynow/<int:product_id>/",views.buynow,name="buynow"),
 )
