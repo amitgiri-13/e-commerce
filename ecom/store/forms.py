@@ -21,12 +21,3 @@ class OrderForm(ModelForm):
             "order_address",
             "contact_number",
         ]
-
-class EditProfileForm(ModelForm):
-    class Meta:
-        model = Profile
-        fields = [
-            "image",
-            "address"
-        ]
-        

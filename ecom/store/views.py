@@ -5,7 +5,7 @@ from django.db.models import Prefetch
 
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import SignUpForm, OrderForm, EditProfileForm
+from .forms import SignUpForm, OrderForm
 
 class ProfileView(generic.DetailView):
     model = Profile
@@ -193,22 +193,25 @@ def signup(request):
 
     return render(request, 'store/signup.html', {'form': form})
 
+@login_required
 def edit_profile(request):
     if request.method == "POST":
-        form = EditProfileForm(request.POST)
-        if form.is_valid():
-            user = request.user
-            address = form.cleaned_data["address"]
-            image = form.cleaned_data["image"]
-            form.user.username = request.POST.get("username")
-            form.user.first_name = request.POST.get("first_name")
-            form.user.last_name = request.POST.get("last_name")
-            form.save()
+        user = request.user
+        user.profile.address = request.POST.get("address")
+        
+        if request.FILES.get("image"):
+            user.profile.image = request.FILES.get("image")
+        
+        user.username =  request.POST.get("username")
+        user.first_name =  request.POST.get("first_name")
+        user.last_name =  request.POST.get("last_name")
+        user.email =  request.POST.get("email")
 
-            return redirect("editprofile")
-    else:
-        form = EditProfileForm()
+        user.profile.save()
+        user.save()
+        
+        return redirect("profile")
 
-    return render(request,"store/editprofile.html",{"form":form})
+    return render(request,"store/editprofile.html",{"user":request.user})
             
 
