@@ -66,7 +66,7 @@ class Order(models.Model):
     buyer = models.ForeignKey(User,on_delete=models.CASCADE,related_name="customer")
     order_status = models.CharField(max_length=3,choices=OrderStatus.choices,default=OrderStatus.CREATED)
     payment_status = models.BooleanField(default=False)
-    order_date = models.DateField(auto_now_add=True)
+    order_date = models.DateTimeField(auto_now_add=True)
     order_address = models.CharField(max_length=255,null=False,blank=False)
     receiver_name = models.CharField(max_length=100)
     contact_number = models.BigIntegerField(
@@ -76,6 +76,8 @@ class Order(models.Model):
             code='invalid_phone_number'
         )]
     )
+    class Meta:
+        ordering = ["-order_date"]
 
     @property 
     def seller(self):

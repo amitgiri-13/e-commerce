@@ -5,7 +5,7 @@ from django.db.models import Prefetch
 
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import SignUpForm, OrderForm
+from .forms import SignUpForm, OrderForm, EditProfileForm
 
 class ProfileView(generic.DetailView):
     model = Profile
@@ -51,6 +51,7 @@ class OrderView(generic.ListView):
     model = Order
     template_name = "store/order.html"
     context_object_name = "order_list"
+    view_type = "order"
 
     def get_queryset(self):
         return Order.objects.filter(
@@ -59,9 +60,53 @@ class OrderView(generic.ListView):
             models.Q(order_status="DP")
             )
             )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['view_type'] = self.view_type
+        return context
+
+class PurchaseView(generic.ListView):
+    model = Order
+    template_name = "store/order.html"
+    context_object_name = "order_list"
+    view_type = "purchase"
+
+    def get_queryset(self):
+        return Order.objects.filter(
+            models.Q(buyer=self.request.user) &
+            models.Q(order_status="DV") &
+            models.Q(payment_status=True)
+        )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['view_type'] = self.view_type
+        return context
+
+class ReturnView(generic.ListView):
+    model = Order
+    template_name = "store/order.html"
+    context_object_name = "order_list"
+    view_type = "reutrn"
+
+    def get_queryset(self):
+        return Order.objects.filter(
+            models.Q(buyer=self.request.user) &
+            models.Q(order_status="RTV")
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['view_type'] = self.view_type
+        return context
+
 class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "store/orderdetail.html"
+    context_object_name = "order"
+
+class PaymentView(generic.DetailView):
+    model = Order
+    template_name = "store/payment.html"
     context_object_name = "order"
 
 def search_items(request):
@@ -94,7 +139,7 @@ def buynow(request,product_id):
             order.buyer = buyer
             order.save()
 
-            return redirect('orders') 
+            return redirect('payment',pk=order.id) 
     else:
         form = OrderForm()
         
@@ -147,4 +192,23 @@ def signup(request):
         form = SignUpForm()
 
     return render(request, 'store/signup.html', {'form': form})
+
+def edit_profile(request):
+    if request.method == "POST":
+        form = EditProfileForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            address = form.cleaned_data["address"]
+            image = form.cleaned_data["image"]
+            form.user.username = request.POST.get("username")
+            form.user.first_name = request.POST.get("first_name")
+            form.user.last_name = request.POST.get("last_name")
+            form.save()
+
+            return redirect("editprofile")
+    else:
+        form = EditProfileForm()
+
+    return render(request,"store/editprofile.html",{"form":form})
+            
 

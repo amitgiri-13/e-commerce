@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from .models import Order
+from .models import Order,Profile
 
 class SignUpForm(UserCreationForm):
     class Meta:
@@ -21,3 +21,12 @@ class OrderForm(ModelForm):
             "order_address",
             "contact_number",
         ]
+
+class EditProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            "image",
+            "address"
+        ]
+        

@@ -4,7 +4,14 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Orders</h1>
+    {%if view_type == "order"%}
+        <h1 class="text-3xl font-bold mb-8">Orders in process</h1>
+    {%elif view_type == "purchase"%}
+        <h1 class="text-3xl font-bold mb-8">Your purchase history</h1>
+    {%else%}
+        <h1 class="text-3xl font-bold mb-8">Your returned orders</h1>
+    {%endif%}
+
     {% if order_list %}
     <table class="table-auto w-full">
         <thead>
@@ -32,10 +39,13 @@
                 <td class="border px-4 py-2">{{ order.payment_status }}</td>
                 <td class="border px-4 py-2">{{ order.order_date }}</td>
                 <td class="border px-4 py-2">
-                    <form action="{%url 'cancelorder' order_id=order.id%}" method ='POST' class="text-red-500 hover:text-red-700 mr-2">
-                        {%csrf_token%}
-                        <button type='Submit' class='hover:underline'>Cancel</button>
-                    </form>
+                    {%if view_type == "order"%}
+                        <form action="{%url 'cancelorder' order_id=order.id%}" method ='POST' class="text-red-500 hover:text-red-700 mr-2">
+                            {%csrf_token%}
+                            <button type='Submit' class='hover:underline'>Cancel</button>
+                        </form>
+                    {%endif%}
+                    
                     <a href='{% url "orderdetail" pk=order.id %}' class="text-green-500 hover:text-green-700">View</a>
                     
                 </td>
@@ -44,7 +54,13 @@
         </tbody>
     </table>
     {% else %}
-    <p>No orders created yet!</p>
+        {%if view_type == "order"%}
+            <p>No orders created yet!</p>
+        {%elif view_type == "purchase"%}
+            <p>No purchases made yet!</p>
+        {%else%}
+            <p>No returned orders yet!</p>
+        {%endif%}
     {% endif %}
 </div>
 {% endblock %}
