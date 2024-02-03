@@ -1,0 +1,18 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Reviews{% endblock %}
+
+{% block content %}
+<div class="flex flex-wrap justify-center">
+    {% if review_list %}
+        {% for review in review_list %}
+            <div class="max-w-xs bg-white shadow-md rounded-lg overflow-hidden m-4">
+                <img src="{% static review.image.url %}" alt="Review Image" class="w-full">
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center">No reviews yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

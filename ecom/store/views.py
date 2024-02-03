@@ -109,6 +109,11 @@ class PaymentView(generic.DetailView):
     template_name = "store/payment.html"
     context_object_name = "order"
 
+class ReviewView(generic.ListView):
+    model = Review
+    template_name = "store/reviews.html"
+    context_object_name = "review_list"
+
 def search_items(request):
     query = request.POST.get('search_by')
     if query:

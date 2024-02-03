@@ -18,3 +18,4 @@ class CartAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Profile)
 admin.site.register(Order)
+admin.site.register(Review)

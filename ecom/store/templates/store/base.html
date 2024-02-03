@@ -27,6 +27,7 @@
         {%if request.user.is_authenticated%}
         <a href="{%url "my_carts"%}" class="hover:underline">My Cart</a>
         {%endif%}
+        <a href="{%url "reviews"%}" class="hover:underline">Reviews</a>
       </div>
       <div class="flex items-center space-x-4">
         {%if request.user.is_authenticated%}

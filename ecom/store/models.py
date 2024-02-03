@@ -89,3 +89,6 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product.product
+
+class Review(models.Model):
+    image = models.ImageField(upload_to="store/static/store/reviews",blank=False,null=False )

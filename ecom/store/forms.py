@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from .models import Order,Profile
+from django import forms
 
 class SignUpForm(UserCreationForm):
     class Meta:
@@ -21,3 +22,8 @@ class OrderForm(ModelForm):
             "order_address",
             "contact_number",
         ]
+
+
+class PasswordResetConfirmForm(forms.Form):
+    new_password = forms.CharField(label='new_password', widget=forms.PasswordInput)
+    new_password_confirm = forms.CharField(label='confirm_pssword', widget=forms.PasswordInput)
