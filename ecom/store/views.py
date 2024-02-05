@@ -1,11 +1,32 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views import generic
-from django.contrib.auth import login
+from django.contrib.auth import login,authenticate
 from django.db.models import Prefetch
+from django.contrib.auth.views import LoginView
 
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import SignUpForm, OrderForm
+
+
+class CustomLoginView(LoginView):
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request,*args,**kwargs)
+
+        if request.user.is_authenticated:
+            return self.handle_user_redirect(request.user)
+
+        return response
+
+    def handle_user_redirect(self,user):
+
+        if user.groups.filter(name='vendor').exists():
+            return redirect("vendor:dashboard")
+
+        else:
+            return redirect("home")
+
+        
 
 class ProfileView(generic.DetailView):
     model = Profile
@@ -219,4 +240,3 @@ def edit_profile(request):
 
     return render(request,"store/editprofile.html",{"user":request.user})
             
-

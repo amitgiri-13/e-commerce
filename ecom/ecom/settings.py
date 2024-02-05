@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     #myapps
     'store',
+    'vendor',
 ]
 
 MIDDLEWARE = [
