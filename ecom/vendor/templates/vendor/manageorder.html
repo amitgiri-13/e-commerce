@@ -1,0 +1,43 @@
+{%extends "vendor/base.html"%}
+
+{%block title%}Manage Orders {%endblock%}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Order List</h1>
+<div class="overflow-x-auto">
+    <table class="table-auto w-full border-collapse border border-gray-200">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 bg-gray-100">Order ID</th>
+                <th class="px-4 py-2 bg-gray-100">Product</th>
+                <th class="px-4 py-2 bg-gray-100">Quantity</th>
+                <th class="px-4 py-2 bg-gray-100">Buyer</th>
+                <th class="px-4 py-2 bg-gray-100">Order Status</th>
+                <th class="px-4 py-2 bg-gray-100">Payment Status</th>
+                <th class="px-4 py-2 bg-gray-100">Order Date</th>
+                <th class="px-4 py-2 bg-gray-100">Order Address</th>
+                <th class="px-4 py-2 bg-gray-100">Receiver Name</th>
+                <th class="px-4 py-2 bg-gray-100">Contact Number</th>
+                <th class="px-4 py-2 bg-gray-100">Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+                <tr>
+                    <td class="px-4 py-2">{{ order.id }}</td>
+                    <td class="px-4 py-2">{{ order.product }}</td>
+                    <td class="px-4 py-2">{{ order.quantity }}</td>
+                    <td class="px-4 py-2">{{ order.buyer.username }}</td>
+                    <td class="px-4 py-2">{{ order.get_order_status_display }}</td>
+                    <td class="px-4 py-2">{% if order.payment_status %}Paid{% else %}Not Paid{% endif %}</td>
+                    <td class="px-4 py-2">{{ order.order_date }}</td>
+                    <td class="px-4 py-2">{{ order.order_address }}</td>
+                    <td class="px-4 py-2">{{ order.receiver_name }}</td>
+                    <td class="px-4 py-2">{{ order.contact_number }}</td>
+                    <td class="px-4 py-2">{{ order.total_price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}

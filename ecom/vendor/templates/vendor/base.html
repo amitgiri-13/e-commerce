@@ -13,46 +13,27 @@
             <div class="flex items-center space-x-4">
                 <a href="#" class="text-lg font-bold">E-Commerce</a>
             </div>
-            <div class="flex items-center space-x-4">
-                {% if request.user.is_authenticated %}
-                <form method="POST" action="{% url 'logout' %}" class="inline">
-                    {% csrf_token %}
-                    <button type="submit" class="hover:underline">Logout</button>
-                </form>
-                <a href="/profile/" class="hover:underline">{{ request.user.username }}</a>
-                {% else %}
-                <a href="/login/" class="hover:underline">Login</a>
-                <a href="/signup/" class="hover:underline">Signup</a>
-                {% endif %}
-            </div>
         </div>
     </nav>
 
     <!-- Sidebar -->
-    <nav class="bg-blue-500 text-white w-64 px-4 py-8 flex flex-col fixed h-full">
-        <div class="bg-gray-800 flex-shrink-0 flex items-center">
+    <nav class="bg-green-500 text-white w-64 px-4 py-8 flex flex-col fixed h-full">
+        <div class="bg-green-500 flex-shrink-0 flex items-center">
             <span class="text-2xl font-bold">{{ request.user.first_name }}</span>
         </div>
         <div class="mt-8">
             <ul>
                 <li class="mb-4">
-                    <a href="#" class="flex items-center">
+                    <a href="/seller/" class="flex items-center">
                         <svg class="w-6 h-6 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                         </svg>
                         Dashboard
                     </a>
                 </li>
+        
                 <li class="mb-4">
-                    <a href="#" class="flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3c-1.667 0-2.333.667-3 .667V20c1.333 0 1.833-.667 3-.667V3zm14 0V20c-1.167 0-1.667.667-3 .667V3c1.167 0 1.833-.667 3-.667zM7 10h10M7 14h10"></path>
-                        </svg>
-                        Category
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="#" class="flex items-center">
+                    <a href="/manageproduct/" class="flex items-center">
                         <svg class="w-6 h-6 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
@@ -60,7 +41,7 @@
                     </a>
                 </li>
                 <li class="mb-4">
-                    <a href="#" class="flex items-center">
+                    <a href="/manageorder/" class="flex items-center">
                         <svg class="w-6 h-6 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3c-1.667 0-2.333.667-3 .667V20c1.333 0 1.833-.667 3-.667V3zm14 0V20c-1.167 0-1.667.667-3 .667V3c1.167 0 1.833-.667 3-.667zM7 10h10M7 14h10"></path>
                         </svg>
@@ -70,8 +51,10 @@
                 <li class="mb-4">
                     <a href="#" class="flex items-center">
                         <svg class="w-6 h-6 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.13 14.23a9 9 0 0 1-2.44 2.44l-2.6-1.3a6 6 0 0 0-1.74-.95l-.36-3.07a6 6 0 0 0 1.75-3.05l2.59-1.3a9 9 0 0 1 2.43 2.44zM12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
                         </svg>
+                        
+                        
                         Settings
                     </a>
                 </li>
