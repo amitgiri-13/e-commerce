@@ -1,0 +1,48 @@
+{%extends "vendor/base.html"%}
+
+{%block title%}Add Product{%endblock%}
+
+{%block content%}
+<div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+    <h1 class="text-2xl font-bold mb-4">Create Product</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-4">
+                    <label class="block text-sm font-bold mb-2" for="category">Category:</label>
+                    {{ form.category }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="product">Product</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="product" type="text" placeholder="Product" name="product">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Description</label>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Description" name="description"></textarea>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Price</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" type="number" placeholder="Price" name="price">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Image</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" type="file" name="image">
+        </div>
+        
+        {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="mb-5 p-4 rounded-xl bg-red-300 text-black">
+                    <p>{{ error|escape }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+        <div class="mb-4">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Create Product</button>
+        </div>
+    </form>
+</div>
+{%endblock%}
