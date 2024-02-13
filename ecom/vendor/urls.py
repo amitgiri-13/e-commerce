@@ -6,7 +6,8 @@ urlpatterns = [
     path("seller/",views.DashboardView.as_view(),name="dashboard"),
 
     path("manageproduct/",views.ManageProductView.as_view(),name="manageproduct"),
-    path("addproduct/",views.add_product,name="addproduct"),
+    path("addproduct/",views.AddProductView.as_view(),name="addproduct"),
+    path("deleteproduct/<int:product_id>/",views.delete_product,name="deleteproduct"),
 
 
     path("manageorder/",views.ManageOrderView.as_view(),name="manageorder"),
