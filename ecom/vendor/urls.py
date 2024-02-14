@@ -8,7 +8,9 @@ urlpatterns = [
     path("manageproduct/",views.ManageProductView.as_view(),name="manageproduct"),
     path("addproduct/",views.AddProductView.as_view(),name="addproduct"),
     path("deleteproduct/<int:product_id>/",views.delete_product,name="deleteproduct"),
+    path("editproduct/<int:product_id>/",views.EditProductView.as_view(),name="editproduct"),
 
 
     path("manageorder/",views.ManageOrderView.as_view(),name="manageorder"),
+    path("deleteorder/<int:order_id>/",views.delete_order,name="deleteorder"),
 ]
