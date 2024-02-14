@@ -73,7 +73,11 @@ class EditProductView(VendorAccessMixin,LoginRequiredMixin,generic.TemplateView)
             return redirect("vendor:manageproduct")
         
         return render(request,self.template_name,{"form":form})
-    
+
+class ShippingView(VendorAccessMixin,LoginRequiredMixin,generic.DetailView):
+    model = Order
+    template_name = "vendor/shipping.html"
+    context_object_name = "order"  
 
 @login_required
 def delete_product(request,product_id):
@@ -93,3 +97,16 @@ def delete_order(request,order_id):
             order.delete()
             return redirect("vendor:manageorder")
     return redirect("vendro:manageorder")
+
+@login_required
+def dispatch_order(request,order_id):
+    if request.method == "POST":
+        order = Order.objects.get(pk=order_id)
+        if order.seller == request.user:
+            order.order_status = "DP"
+            order.save()
+            return redirect("vendor:manageorder")
+
+    return redirect("vendor:manageorder")
+
+

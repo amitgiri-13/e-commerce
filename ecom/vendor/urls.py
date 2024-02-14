@@ -13,4 +13,7 @@ urlpatterns = [
 
     path("manageorder/",views.ManageOrderView.as_view(),name="manageorder"),
     path("deleteorder/<int:order_id>/",views.delete_order,name="deleteorder"),
+    path("dispatchorder/<int:order_id>/",views.dispatch_order,name="dispatchorder"),
+    
+    path("print/<int:pk>/",views.ShippingView.as_view(),name="print"),
 ]
