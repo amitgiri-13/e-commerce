@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.views import generic
 from store.models import Product,Order
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.utils import timezone
+
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,7 +17,27 @@ class VendorAccessMixin(UserPassesTestMixin):
 
 class DashboardView(VendorAccessMixin,LoginRequiredMixin,generic.TemplateView):
     template_name = "vendor/dashboard.html"
-    group_required = "vendor"
+    
+    def  get_queryset(self):
+        return Order.objects.filter(product__owner=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_orders"] =  self.get_queryset().count()
+        context["total_returned_orders"] = self.get_queryset().filter(order_status="RTV").count()
+        context["total_delivered_orders"] = self.get_queryset().filter(order_status="DV").count()
+        context["orders_in_process"] = self.get_queryset().filter(order_status="DP").count()
+        context["order_value"] = sum(order.total_price for order in self.get_queryset())
+        context["returned_value"] = sum(order.total_price for order in self.get_queryset().filter(order_status="RTV"))
+        context["delivered_value"] = sum(order.total_price for order in self.get_queryset().filter(order_status="DV"))
+        context["pending_value"] = sum(order.total_price for order in self.get_queryset().filter(order_status="DP"))
+
+
+        context["today_order_count"] = self.get_queryset().filter(order_date__date = timezone.now().date()).count()
+        context["today_order_value"] = sum(order.total_price for order in self.get_queryset().filter(order_date__date=timezone.now().date()))
+        return context
+    
+    
 
 class ManageProductView(VendorAccessMixin,LoginRequiredMixin,generic.ListView):
     template_name = "vendor/manageproduct.html"
@@ -77,7 +99,7 @@ class EditProductView(VendorAccessMixin,LoginRequiredMixin,generic.TemplateView)
 class ShippingView(VendorAccessMixin,LoginRequiredMixin,generic.DetailView):
     model = Order
     template_name = "vendor/shipping.html"
-    context_object_name = "order"  
+    context_object_name = "order" 
 
 @login_required
 def delete_product(request,product_id):

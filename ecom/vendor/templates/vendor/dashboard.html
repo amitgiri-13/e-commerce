@@ -4,71 +4,64 @@
 
 {% block content %}
 <div class="container mx-auto py-8">
-    <h1 class="text-3xl font-bold text-center mb-8">Vendor Dashboard</h1>
+    <h1 class="text-3xl font-bold text-center mb-8">Dashboard</h1>
     
     <div class="grid grid-cols-3 gap-8">
-        <!-- Total Order (A) -->
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <h2 class="text-lg font-semibold mb-2">Total Orders (A)</h2>
-            <p class="text-2xl font-bold text-blue-500">120</p>
+        <div class="bg-gray-100 rounded-lg shadow-md p-4 h-72">
+            <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+                <h2 class="text-lg font-semibold mb-2 text-blue-600">Total Orders</h2>
+                <p class="text-2xl font-bold text-blue-600">{{total_orders}}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <h2 class="text-lg font-semibold mb-2 text-green-600">Total Delivered Orders</h2>
+                <p class="text-2xl font-bold text-green-600">{{total_delivered_orders}}</p>
+            </div>
         </div>
         
-        <!-- Placeholder (C) -->
-        <div class="col-span-2">
-            <!-- Empty placeholder for now -->
+        <div class="bg-gray-100 rounded-lg shadow-md p-4 h-auto">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-gray-100 rounded-lg shadow-md p-4">
+                        <p class="text-lg font-semibold text-gray-800">Order Value</p>
+                        <p class="text-xl font-semibold text-blue-600">{{order_value}}</p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg shadow-md p-4">
+                        <p class="text-lg font-semibold text-gray-800">Delivered Value</p>
+                        <p class="text-xl font-semibold text-green-600">{{delivered_value}}</p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg shadow-md p-4">
+                        <p class="text-lg font-semibold text-gray-800">Returned Value</p>
+                        <p class="text-xl font-semibold text-red-600">{{returned_value}}</p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg shadow-md p-4">
+                        <p class="text-lg font-semibold text-gray-800">Pending Value</p>
+                        <p class="text-xl font-semibold text-red-600">{{pending_value}}</p>
+                    </div>
+                </div>
+                  
         </div>
 
-        <!-- Total Returned Orders (E) -->
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <h2 class="text-lg font-semibold mb-2">Total Returned Orders (E)</h2>
-            <p class="text-2xl font-bold text-red-500">10</p>
-        </div>
-
-        <!-- Total Canceled Orders (D) -->
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <h2 class="text-lg font-semibold mb-2">Total Canceled Orders (D)</h2>
-            <p class="text-2xl font-bold text-yellow-500">5</p>
+        <div class="bg-gray-100 rounded-lg shadow-md p-4 h-72">
+            <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+                <h2 class="text-lg font-semibold mb-2 text-red-600">Total Returned Orders</h2>
+                <p class="text-2xl font-bold text-red-600">{{total_returned_orders}}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <h2 class="text-lg font-semibold mb-2 text-yellow-600">Orders In Process</h2>
+                <p class="text-2xl font-bold text-yellow-600">{{orders_in_process}}</p>
+            </div>
         </div>
         
-        <!-- Total Delivered Orders (B) -->
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <h2 class="text-lg font-semibold mb-2">Total Delivered Orders (B)</h2>
-            <p class="text-2xl font-bold text-green-500">100</p>
-        </div>
+            <h2 class="text-3xl font-bold text-center mb-8">Today's Symmary</h2>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h2 class="text-lg font-semibold mb-2 text-yellow-600">Today's Orders</h2>
+                    <p class="text-2xl font-bold text-yellow-600">{{today_order_count}}</p>
+                    <h2 class="text-lg font-semibold mb-2 text-yellow-600">Today's Order Value</h2>
+                    <p class="text-2xl font-bold text-yellow-600">{{today_order_value}}</p>
+    
     </div>
-
-    <!-- Sales Analytics (F) -->
-    <div class="bg-white rounded-lg shadow-md p-6 mt-8">
-        <h2 class="text-2xl font-semibold mb-4">Sales Analytics (F)</h2>
-        <div class="grid grid-cols-2 gap-6">
-            <div>
-                <p class="text-sm font-semibold">ORDER VALUE</p>
-                <p class="text-xl font-bold">Rs. 10,480,157.00</p>
-            </div>
-            <div>
-                <p class="text-sm font-semibold">DELIVERED VALUE</p>
-                <p class="text-xl font-bold">Rs. 8,689,265.00</p>
-            </div>
-            <div>
-                <p class="text-sm font-semibold">RETURNED VALUE</p>
-                <p class="text-xl font-bold">Rs. 1,738,692.00</p>
-            </div>
-            <div>
-                <p class="text-sm font-semibold">PENDING VALUE</p>
-                <p class="text-xl font-bold">Rs. 52,200.00</p>
-            </div>
-        </div>
-        <!-- Interactive Chart -->
-        <canvas id="analyticsChart" class="mt-6"></canvas>
-    </div>
-
-    <!-- Sales Patterns -->
-    <div class="mt-8">
-        <h2 class="text-2xl font-semibold mb-4">Sales Patterns</h2>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <!-- Interactive Sales Patterns Visualization -->
-            <canvas id="salesPatternsChart"></canvas>
-        </div>
-    </div>
+    
 </div>
+
+ 
+
 {% endblock %}
