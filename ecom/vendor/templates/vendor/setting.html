@@ -1,0 +1,40 @@
+{%extends "vendor/base.html"%}
+{%load static%}
+{%block title%}Settings{%endblock%}
+
+{%block content%}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Hello {{ profile.user.username }}</h1>
+
+
+    <section class="bg-white shadow-md rounded-md p-6 mb-8">
+        <div class="flex items-center mb-6">
+            {% if profile.image %}
+                <img src="{%static profile.image.url%}" alt="Profile Image" class="rounded-full w-20 h-20 mr-4">
+            {% else %}
+                <div class="rounded-full bg-gray-300 w-20 h-20 flex items-center justify-center mr-4">
+                </div>
+            {% endif %}
+            <div>
+                <h2 class="text-xl font-bold">{{ profile.user.username }}</h2>
+                <p class="text-gray-600">{{ profile.user.email }}</p>
+                <p class="text-gray-600">{{ profile.address }}</p>
+            </div>
+        </div>
+
+        <div>
+            <a href="/editprofile/" target="_blank">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">Edit Profile</button>
+            </a>
+            <a href="/passwordreset/" target="_blank">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">Change Password</button>
+                </a>
+        </div>
+
+    </section>
+    <form action="/logout/" method="post">
+        {% csrf_token %}
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" type="submit">Logout</button>
+    </form>
+</div>
+{%endblock%}

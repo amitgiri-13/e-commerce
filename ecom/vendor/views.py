@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views import generic
-from store.models import Product,Order
+from store.models import Product,Order,Profile
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.utils import timezone
 
@@ -100,6 +100,16 @@ class ShippingView(VendorAccessMixin,LoginRequiredMixin,generic.DetailView):
     model = Order
     template_name = "vendor/shipping.html"
     context_object_name = "order" 
+
+class SettingView(VendorAccessMixin,LoginRequiredMixin,generic.DetailView):
+    template_name = "vendor/setting.html"
+    model = Profile
+    context_object_name = "profile"
+    
+    def get_object(self):
+        return self.request.user.profile
+
+
 
 @login_required
 def delete_product(request,product_id):

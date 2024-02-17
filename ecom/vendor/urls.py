@@ -16,4 +16,6 @@ urlpatterns = [
     path("dispatchorder/<int:order_id>/",views.dispatch_order,name="dispatchorder"),
     
     path("print/<int:pk>/",views.ShippingView.as_view(),name="print"),
+
+    path("setting/",views.SettingView.as_view(),name="setting"),
 ]
