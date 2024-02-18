@@ -245,7 +245,7 @@ def edit_profile(request):
         user.profile.save()
         user.save()
         
-        return redirect("profile")
+        return redirect("login")
 
     return render(request,"store/editprofile.html",{"user":request.user})
             

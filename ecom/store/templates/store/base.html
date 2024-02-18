@@ -9,7 +9,7 @@
 
 <body>
      <!-- Navigation Bar -->
-  <nav class="bg-blue-500 p-4 text-white">
+  <nav class="bg-green-600 p-4 text-white">
     <div class="container mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-4">
         <a href="#" class="text-lg font-bold">E-Commerce</a>
@@ -17,7 +17,7 @@
         <form method="POST" action="{% url 'search' %}" class="flex items-center">
           {% csrf_token %}
           <input type="text" name="search_by" placeholder="Search..." class="border border-gray-300 rounded-xl px-4 py-2 text-black focus:outline-none focus:border-blue-500" />
-          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Search</button>
+          <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Search</button>
       </form>
         
       </div>
