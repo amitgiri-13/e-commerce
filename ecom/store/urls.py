@@ -29,7 +29,7 @@ urlpatterns = (
     path("purchase/",views.PurchaseView.as_view(),name="purchase"),
     path("return/",views.ReturnView.as_view(),name="return"),
 
-    path("passwordreset/",auth_views.PasswordResetView.as_view(template_name="store/passwordreset.html"),name="password_reset"),
+    path("passwordreset/",views.CustomPasswordResetView.as_view(template_name="store/passwordreset.html"),name="password_reset"),
     path("passwordreset/done/",auth_views.PasswordResetDoneView.as_view(template_name="store/passwordresetdone.html"),name="password_reset_done"),
     path("passwordreset/confirm/<uidb64>/<token>/",auth_views.PasswordResetConfirmView.as_view(template_name="store/passwordresetconfirm.html"),name="password_reset_confirm"),
     path("passwordreset/complete/",auth_views.PasswordResetCompleteView.as_view(template_name="store/passwordresetcomplete.html"),name="password_reset_complete"),

@@ -2,11 +2,20 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.views import generic
 from django.contrib.auth import login,authenticate
 from django.db.models import Prefetch
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import SignUpForm, OrderForm
+
+class CustomPasswordResetView(LoginRequiredMixin,PasswordResetView):
+    def form_valid(self,form):
+        email = self.request.user.email
+        user_email = form.cleaned_data["email"]
+        if email == user_email:
+            return super().form_valid(form)
+        return super().form_invalid(form)
 
 
 class CustomLoginView(LoginView):
