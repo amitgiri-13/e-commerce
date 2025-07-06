@@ -16,6 +16,12 @@ A modular and scalable e-commerce web application built with Django. It supports
 
 ---
 
+## Preview
+![image](https://github.com/user-attachments/assets/04b405f0-535a-4d02-ad74-99791f2b9ff3)
+
+![image](https://github.com/user-attachments/assets/85e11698-c456-4a3f-80ce-83d86668ecef)
+
+
 ##  Project Structure
 
 ```
